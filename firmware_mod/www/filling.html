@@ -1,0 +1,174 @@
+ <!-- Filling Detection card-->
+<div class="w3-panel w3-card">
+    <h1 class="is-size-4">Filling Level Detection Settings</h1>
+    
+     <!-- Tab menu -->
+     <div class="w3-row">
+        <a href="javascript:void(0)" onclick="openTab(event, 'generalTab');">
+          <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding w3-border-theme">Detection</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openTab(event, 'notificationsTab');">
+            <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding">Data</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openTab(event, 'zonesTab');zones();">
+          <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding">Region</div>
+        </a>
+        <a href="javascript:void(0)" onclick="openTab(event, 'previewTab');">
+          <div class="w3-quarter tablink w3-bottombar w3-hover-light-grey w3-padding">Preview</div>
+        </a>
+    </div>
+
+    <!-- General Tab -->
+    <div id="generalTab" class="w3-container tab">
+        <p><form class="w3-container" onsubmit="saveConfig('general');return false" id="general"></p>
+                
+        <div class="w3-container">
+            <label>Image Service Endpoint</label>
+            <input class="w3-input" id="serverImage" type="url" placeholder="http://localhost:1111/img" size="6">
+        </div>
+        <div class="w3-container">
+            <label>Image Service Debug Endpoint</label>
+            <input class="w3-input" id="serverDebug" type="url" placeholder="http://localhost:1111/img" size="6">
+        </div>
+        <p></p>
+        <div class="w3-container">
+            <label>Threshold Min</label>
+            <input class="w3-input" id="thresholdMin" type="number" size="6">
+        </div>
+        <div class="w3-container">
+            <label>Threshold Max</label>
+            <input class="w3-input" id="thresholdMax" type="number" size="6">
+        </div>
+        <p></p>
+
+        <div class="w3-container">
+            <label>Level Low (%)</label>
+            <input class="w3-input" id="levelLow" type="number" placeholder="10">
+        </div>
+
+        <div class="w3-container">
+            <label>Level Medium (%)</label>
+            <input class="w3-input" id="levelMedium" type="number" placeholder="50">
+        </div>
+
+        <div class="w3-container">
+            <label>Annotation Color Low</label>
+            <input class="w3-input" id="colorLow" type="color" >
+        </div>
+
+        <div class="w3-container">
+            <label>Annotation Color Medium</label>
+            <input class="w3-input" id="colorMedium" type="color" >
+        </div>
+
+        <div class="w3-container">
+            <label>Annotation Color Full</label>
+            <input class="w3-input" id="colorFull" type="color" >
+        </div>
+        
+        <div class="w3-container">
+            <label>Annotation Color Box</label>
+            <input class="w3-input" id="colorBox" type="color" >
+        </div>
+
+        <p><button class="w3-btn w3-theme" >Save</button></form></p> 
+    </div>
+
+    <!-- Notifications Tab -->
+    <div id="notificationsTab" class="w3-container tab" style="display:none">
+        <p><form class="w3-container" onsubmit="saveConfig('notifications');return false" id="notifications"></p>
+        <div class="w3-container">
+            <label>Filling level detection</label>
+            <select id="fillingDetection" class="w3-select">
+                <option value="off">Deactivate</option>
+                <option value="on">Activate</option>
+            </select>
+        </div>
+        <p></p>
+        <div class="w3-container">
+            <label>Data Service Endpoint</label>
+            <input class="w3-input" id="serverData" type="url" placeholder="http://localhost:1111/data" size="6">
+        </div>
+        
+        <p></p>
+        <div class="w3-container">
+            <label>Update Interval (h)</label>
+            <input class="w3-input" id="updateInterval" type="number" placeholder="6" size="6">
+        </div>
+        <div class="w3-container">
+            <label>Container Capacity (liters)</label>
+            <input class="w3-input" id="containerCapacity" type="number" placeholder="3600">
+        </div>        
+        <div class="w3-container">
+            <label>MQTT Value Topic</label>
+            <input class="w3-input" id="mqttValueTopic" type="text" placeholder="FillingDetection">
+        </div>
+
+        <div class="w3-container">
+            <label>ZIP Code for Oilprice</label>
+            <input class="w3-input" id="zipOilprice" type="text" placeholder="97222">
+        </div>
+
+        <p><button class="w3-btn w3-theme" >Save</button></form></p>
+    </div>
+
+    <!-- Zones Tab -->
+    <div id="zonesTab" class="w3-container tab" style="display:none">
+        <div class="w3-container">
+        <p><form class="w3-container" onsubmit="saveConfig('region');return false" id="region"></p>
+        <div class="w3-container">
+            <label>Current boundaries</label>
+            <input class="w3-input" id="currentRegion" readonly>
+        </div>
+        <p></p>
+        <div class="w3-container">
+            <img id="filling_picture" src="cgi-bin/currentpic.cgi" />
+        </div>
+        <p><button class="w3-btn w3-theme" >Save</button></form></p>
+        </div>
+    </div>
+
+</div>
+
+    <!-- Preview Tab -->
+    <div id="previewTab" class="w3-container tab" style="display:none">
+        <div class="w3-container">
+            <img id="filling_preview" src="cgi-bin/fillingimage.cgi" style="max-width:100%; height: auto;" />
+        </div>
+        <p></p>
+        <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <div class="w3-container">
+                <p>Threshold</p>
+                <img id="filling_debug_threshold" src="cgi-bin/fillingdebug.cgi?step=threshold" style="max-width:100%; height: auto;" />
+            </div>
+            <div class="w3-container">
+                <p>Contours</p>
+                <img id="filling_debug_contour" src="cgi-bin/fillingdebug.cgi?step=contour" style="max-width:100%; height: auto;" />
+            </div>
+            <div class="w3-container">
+                <p>Preprocessing</p>
+                <img id="filling_debug_preprocess" src="cgi-bin/fillingdebug.cgi?step=preprocess" style="max-width:100%; height: auto;" />
+            </div>
+            <div class="w3-container" >
+                <p>Data</p>
+                <pre id="filling_preview_data"></pre>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal save box -->
+<div id="save_confirm" class="w3-modal">
+    <div class="w3-modal-content">
+      <header class="w3-container w3-theme">
+          <span onclick="document.getElementById('save_confirm').style.display='none'"
+          class="w3-button w3-display-topright">&times;</span>
+         <h2>Save config</h2>
+       </header>
+       <div class="w3-container">
+       <p id="save_result"></p>
+      </div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="js/filling.js"></script>

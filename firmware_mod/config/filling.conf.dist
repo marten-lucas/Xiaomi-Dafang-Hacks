@@ -1,0 +1,38 @@
+###################################################################
+# edit this file and move it to /system/sdcard/config/filling.conf #
+###################################################################
+
+# Enable verbose debug messages to stderr
+debug_msg_enable=false
+
+# Configure the filling detection core parameters
+filling_detection=on
+region_of_interest=692,21,712,681
+# Service endpoints
+server_image="http://192.168.80.16:8000/filling-image"
+server_data="http://192.168.80.16:8000/filling-data"
+server_debug="http://192.168.80.16:8000/filling-debug"
+
+# Threshold values for filling detection
+threshold_min="130"
+threshold_max="254"
+
+# Level indicators
+level_low="10"
+level_medium="50"
+
+# Annotation colors (RGB format)
+color_low="#FF0000"
+color_medium="#FFFF00"
+color_full="#00FF00"
+color_box="#0000FF"
+
+# Update and capacity settings
+update_interval="6"
+container_capacity="3600"
+
+# MQTT settings
+mqtt_value_topic="FillingDetection"
+
+# Optional fields
+zip_oilprice="97222"
